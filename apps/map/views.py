@@ -32,7 +32,7 @@ def index(request):
     ))
 
     fig.update_layout(
-        title_text='Technical Job<br>(Hover for breakdown)',
+        title_text='Average Salary of Computer/Technical Jobs',
         geo=dict(
             scope='usa',
             projection=go.layout.geo.Projection(type='albers usa'),
