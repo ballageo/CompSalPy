@@ -15,7 +15,7 @@
             var st2;
             $("select").formSelect();
             $(".dropdown-trigger").dropdown();
-            $('#dropdown1').on('change', function() {
+            $('#color').on('change', function() {
                 color = $(this).val();
                 console.log(color)
             })
@@ -35,7 +35,6 @@
                     $("#popgraph").html(serverResponse);
                 }
             });
-            console.log("list item selected");
             });
         });
     </script>
@@ -58,11 +57,11 @@
             <span class="brand-logo left">CompSal</span>
             <ul id="nav-mobile" class="right">
             <div class="input-field col s6">
-            <select name="color" id="state1">
+            <select name="color" id="color">
                 <li><option value="green" selected>Trichromatic</option></li>
-                <li><option value="blue" selected>Deuteranopia</option></li>
-                <li><option value="blue" selected>Protanopia</option></li>
-                <li><option value="red" selected>Tritanopia</option></li>
+                <li><option value="blue" >Deuteranopia</option></li>
+                <li><option value="blue" >Protanopia</option></li>
+                <li><option value="red" >Tritanopia</option></li>
                 
             </select>
             </div>

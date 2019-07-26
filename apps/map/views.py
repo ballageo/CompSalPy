@@ -167,11 +167,13 @@ def index(request):
     x = "State: " + df['ST'] + '<br>' + 'Job Title: ' + \
         df['OCC_TITLE'] + '<br>' + 'Annual Sal: ' + '$' + df['A_MEAN']
 
+    color = "blue"
+
     fig = go.Figure(data=go.Choropleth(
         locations=df['ST'],
         z=df['A_MEAN'],
         locationmode='USA-states',
-        colorscale="greens",    #<----Color for map
+        colorscale=color+"s",    #<----Color for map
         autocolorscale=False,
         text=x,  # hover text
         marker_line_color='white',  # line markers between states
@@ -186,7 +188,7 @@ def index(request):
             projection=go.layout.geo.Projection(type='albers usa'),
             showlakes=False,  # lakes
             lakecolor='rgb(255, 255, 255)'),
-        margin=dict(t=5, b=5, r=5, l=5)
+            margin=dict(t=0, b=0, r=5, l=5),
     )
 
     state_conv_list = {
@@ -285,155 +287,6 @@ datetime.datetime(year=2017, month=1, day=1),datetime.datetime(year=2018, month=
         x=years, y=[st1_avg2016, st1_avg2017, st1_avg2018], name=state_name1))
     graph.add_trace(go.Scatter(
         x=years, y=[avg2016, avg2017, avg2018], name="National Average"))
-    graph.update_layout(
-        xaxis_range=[datetime.datetime(
-            2016, 1, 1), datetime.datetime(2018, 1, 1)],
-        autosize=True,
-        height=200,
-        margin=dict(t=5, b=5, r=5, l=5)
-    )
-
-    states = {
-        "Alabama": 0,
-        "Alaska": 1,
-        "Arizona": 2,
-        "Arkansas": 3,
-        "California": 4,
-        "Colorado": 5,
-        "Connecticut": 6,
-        "Delaware": 7,
-        "Florida": 8,
-        "Georgia": 9,
-        "Hawaii": 10,
-        "Idaho": 11,
-        "Illinois": 12,
-        "Indiana": 13,
-        "Iowa": 14,
-        "Kansas": 15,
-        "Kentucky": 16,
-        "Louisiana": 17,
-        "Maine": 18,
-        "Maryland": 19,
-        "Massachusetts": 20,
-        "Michigan": 21,
-        "Minnesota": 22,
-        "Mississippi": 23,
-        "Missouri": 24,
-        "Montana": 25,
-        "Nebraska": 26,
-        "Nevada": 27,
-        "New Hampshire": 28,
-        "New Jersey": 29,
-        "New Mexico": 30,
-        "New York": 31,
-        "North Carolina": 32,
-        "North Dakota": 33,
-        "Ohio": 34,
-        "Oklahoma": 35,
-        "Oregon": 36,
-        "Pennsylvania": 37,
-        "Rhode Island": 38,
-        "South Carolina": 39,
-        "South Dakota": 40,
-        "Tennessee": 41,
-        "Texas": 42,
-        "Utah": 43,
-        "Vermont": 44,
-        "Virginia": 45,
-        "Washington": 46,
-        "West Virginia": 47,
-        "Wisconsin": 48,
-        "Wyoming": 49
-    }
-    statesNoWA = {
-        "Alabama": 0,
-        "Alaska": 1,
-        "Arizona": 2,
-        "Arkansas": 3,
-        "California": 4,
-        "Colorado": 5,
-        "Connecticut": 6,
-        "Delaware": 7,
-        "Florida": 8,
-        "Georgia": 9,
-        "Hawaii": 10,
-        "Idaho": 11,
-        "Illinois": 12,
-        "Indiana": 13,
-        "Iowa": 14,
-        "Kansas": 15,
-        "Kentucky": 16,
-        "Louisiana": 17,
-        "Maine": 18,
-        "Maryland": 19,
-        "Massachusetts": 20,
-        "Michigan": 21,
-        "Minnesota": 22,
-        "Mississippi": 23,
-        "Missouri": 24,
-        "Montana": 25,
-        "Nebraska": 26,
-        "Nevada": 27,
-        "New Hampshire": 28,
-        "New Jersey": 29,
-        "New Mexico": 30,
-        "New York": 31,
-        "North Carolina": 32,
-        "North Dakota": 33,
-        "Ohio": 34,
-        "Oklahoma": 35,
-        "Oregon": 36,
-        "Pennsylvania": 37,
-        "Rhode Island": 38,
-        "South Carolina": 39,
-        "South Dakota": 40,
-        "Tennessee": 41,
-        "Texas": 42,
-        "Utah": 43,
-        "Vermont": 44,
-        "Virginia": 45,
-        "Washington": 46,
-        "West Virginia": 47,
-        "Wisconsin": 48,
-        "Wyoming": 49
-    }
-
-    line_graph = offline.plot(graph, include_plotlyjs=False, output_type='div')
-    line_graph2 = offline.plot(
-        graph, include_plotlyjs=False, output_type='div')
-
-    # animals = ['giraffes', 'orangutans', 'monkeys']
-
-    # graph2 = go.Figure(
-    #     data=[
-    #         go.Bar(name='SF Zoo', x=animals, y=[20, 14, 23]),
-    #         go.Bar(name='LA Zoo', x=animals, y=[12, 18, 29])
-    #     ])
-
-    # graph2.update_layout(barmode='group')
-
-    # bar_graph = offline.plot(graph2, include_plotlyjs=False, output_type='div')
-
-    context = {
-        'map': sal_map,
-        'line_graph': line_graph,
-        'line_graph2': line_graph2,
-        "states": states,
-        "statesNoWA": statesNoWA,
-        # "bar_graph": bar_graph,
-    }
-    return render(request, "map/index.html", context)
-
-
-def test2(request, st1, st2):
-    print(st1, st2)
-    years = [datetime.datetime(year=2016, month=1, day=1),
-            datetime.datetime(year=2017, month=1, day=1),
-            datetime.datetime(year=2018, month=1, day=1)]
-
-    graph = go.Figure()
-    graph.add_trace(go.Scatter(x=years, y=[80000, 83500, 96000], name="2018"))
-    graph.add_trace(go.Scatter(x=years, y=[50000, 63500, 76000], name="2017"))
     graph.update_layout(
         xaxis_range=[datetime.datetime(
             2016, 1, 1), datetime.datetime(2018, 1, 1)],
@@ -545,6 +398,154 @@ def test2(request, st1, st2):
         "Wisconsin": "WI",
         "Wyoming": "WY"
     }
+
+    line_graph = offline.plot(graph, include_plotlyjs=False, output_type='div')
+    line_graph2 = offline.plot(
+        graph, include_plotlyjs=False, output_type='div')
+
+    # animals = ['giraffes', 'orangutans', 'monkeys']
+
+    # graph2 = go.Figure(
+    #     data=[
+    #         go.Bar(name='SF Zoo', x=animals, y=[20, 14, 23]),
+    #         go.Bar(name='LA Zoo', x=animals, y=[12, 18, 29])
+    #     ])
+
+    # graph2.update_layout(barmode='group')
+
+    # bar_graph = offline.plot(graph2, include_plotlyjs=False, output_type='div')
+
+    context = {
+        'map': sal_map,
+        'line_graph': line_graph,
+        'line_graph2': line_graph2,
+        "states": states,
+        "statesNoWA": statesNoWA,
+        # "bar_graph": bar_graph,
+    }
+    return render(request, "map/index.html", context)
+
+
+def test2(request, st1, st2):
+    print(st1, st2)
+    years = [datetime.datetime(year=2016, month=1, day=1),
+            datetime.datetime(year=2017, month=1, day=1),
+            datetime.datetime(year=2018, month=1, day=1)]
+
+    graph = go.Figure()
+    graph.add_trace(go.Scatter(x=years, y=[80000, 83500, 96000], name="2018"))
+    graph.add_trace(go.Scatter(x=years, y=[50000, 63500, 76000], name="2017"))
+    graph.update_layout(
+        xaxis_range=[datetime.datetime(
+            2016, 1, 1), datetime.datetime(2018, 1, 1)],
+        autosize=True,
+        height=200,
+        margin=dict(t=5, b=5, r=5, l=5)
+    )
+
+    # states = {
+    #     "Alabama": "AL",
+    #     "Alaska": "AK",
+    #     "Arizona": "AZ",
+    #     "Arkansas": "AR",
+    #     "California": "CA",
+    #     "Colorado": "CO",
+    #     "Connecticut": "CT",
+    #     "Delaware": "DE",
+    #     "Florida": "FL",
+    #     "Georgia": "GA",
+    #     "Hawaii": "HI",
+    #     "Idaho": "ID",
+    #     "Illinois": "IL",
+    #     "Indiana": "IN",
+    #     "Iowa": "IA",
+    #     "Kansas": "KS",
+    #     "Kentucky": "KY",
+    #     "Louisiana": "LA",
+    #     "Maine": "ME",
+    #     "Maryland": "MD",
+    #     "Massachusetts": "MA",
+    #     "Michigan": "MI",
+    #     "Minnesota": "MN",
+    #     "Mississippi": "MS",
+    #     "Missouri": "MO",
+    #     "Montana": "MT",
+    #     "Nebraska": "NE",
+    #     "Nevada": "NV",
+    #     "New Hampshire": "NH",
+    #     "New Jersey": "NJ",
+    #     "New Mexico": "NM",
+    #     "New York": "NY",
+    #     "North Carolina": "NC",
+    #     "North Dakota": "ND",
+    #     "Ohio": "OH",
+    #     "Oklahoma": "OK",
+    #     "Oregon": "OR",
+    #     "Pennsylvania": "PA",
+    #     "Rhode Island": "RI",
+    #     "South Carolina": "SC",
+    #     "South Dakota": "SD",
+    #     "Tennessee": "TN",
+    #     "Texas": "TX",
+    #     "Utah": "UT",
+    #     "Vermont": "VT",
+    #     "Virginia": "VA",
+    #     "Washington": "WA",
+    #     "West Virginia": "WV",
+    #     "Wisconsin": "WI",
+    #     "Wyoming": "WY"
+    # }
+    # statesNoWA = {
+    #     "Alabama": "AL",
+    #     "Alaska": "AK",
+    #     "Arizona": "AZ",
+    #     "Arkansas": "AR",
+    #     "California": "CA",
+    #     "Colorado": "CO",
+    #     "Connecticut": "CT",
+    #     "Delaware": "DE",
+    #     "Florida": "FL",
+    #     "Georgia": "GA",
+    #     "Hawaii": "HI",
+    #     "Idaho": "ID",
+    #     "Illinois": "IL",
+    #     "Indiana": "IN",
+    #     "Iowa": "IA",
+    #     "Kansas": "KS",
+    #     "Kentucky": "KY",
+    #     "Louisiana": "LA",
+    #     "Maine": "ME",
+    #     "Maryland": "MD",
+    #     "Massachusetts": "MA",
+    #     "Michigan": "MI",
+    #     "Minnesota": "MN",
+    #     "Mississippi": "MS",
+    #     "Missouri": "MO",
+    #     "Montana": "MT",
+    #     "Nebraska": "NE",
+    #     "Nevada": "NV",
+    #     "New Hampshire": "NH",
+    #     "New Jersey": "NJ",
+    #     "New Mexico": "NM",
+    #     "New York": "NY",
+    #     "North Carolina": "NC",
+    #     "North Dakota": "ND",
+    #     "Ohio": "OH",
+    #     "Oklahoma": "OK",
+    #     "Oregon": "OR",
+    #     "Pennsylvania": "PA",
+    #     "Rhode Island": "RI",
+    #     "South Carolina": "SC",
+    #     "South Dakota": "SD",
+    #     "Tennessee": "TN",
+    #     "Texas": "TX",
+    #     "Utah": "UT",
+    #     "Vermont": "VT",
+    #     "Virginia": "VA",
+    #     "West Virginia": "WV",
+    #     "Wisconsin": "WI",
+    #     "Wyoming": "WY"
+    # }
     line_graph = drawlineGraph()
 
     context = {
@@ -556,7 +557,7 @@ def test2(request, st1, st2):
 def test(request, st1, st2):
     request.session['state1'] = st1
     request.session['state2'] = st2
-    drawlineGraph()
+    # drawlineGraph()
     return redirect(f'/test2/{st1}/{st2}')
 
 def buildBarChart(st_info1, st_info2, st1_name, st2_name):
